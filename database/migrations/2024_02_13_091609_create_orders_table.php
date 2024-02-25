@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('number');
             $table->text('address');
+            $table->string('order_status');
+            $table->string('payment_status');
             $table->string('payment_method',20);
             $table->double('total',10,2);
             $table->timestamps();

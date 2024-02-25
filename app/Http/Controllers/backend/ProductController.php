@@ -8,6 +8,7 @@ use App\Models\backend\Employee;
 use App\Models\backend\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
@@ -20,8 +21,21 @@ class ProductController extends Controller
     }
     public function list()
     {
-        $products = Product::latest()->paginate(5);
-        return view('backend.pages.product.list',compact('products'));
+        // Cache::forget('products');
+        if(Cache::has('products'))
+        {
+            $dataSource="Cache";
+            $products=Cache::get('products');
+
+        }else{
+            $dataSource="Database";
+            $products = Product::latest()->paginate(5);
+
+            Cache::put('products',$products);
+        }
+        return view('backend.pages.product.list',compact('products','dataSource'));
+        // $products = Product::latest()->paginate(5);
+        // return view('backend.pages.product.list',compact('products'));
     }
     public function show($id)
     {
@@ -58,15 +72,38 @@ class ProductController extends Controller
 
 
         Product::create([
-            'productCode'=>$request->productCode,
-            'productName'=>$request->productName,
-            'quantity'=>'20',
-            'description'=>'New',
-            'productPrice'=>$request->productPrice,
-            'productImage'=> implode("|",$images),
+            'productCode'   =>$request->productCode,
+            'productName'   =>$request->productName,
+            'quantity'      =>'20',
+            'description'   =>'New',
+            'productPrice'  =>$request->productPrice,
+            'productImage'  => implode("|",$images),
         ]);
 
-        notify()->success('Product added succesfully.', 'Product');
+        notify()->success('Product added Successfully.', 'Product');
+        Cache::forget('products');
+        Cache::forget('homeProducts');
+        return redirect()->back();
+    }
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        return view('backend.pages.product.edit',compact('product'));
+    }
+    public function update(Request $request,$id)
+    {
+        // dd($request->all(),$id);
+        $product = Product::find($id);
+        $product->update([
+            'productName'   =>$request->productName,
+            'quantity'      =>$request->quantity,
+            'productPrice'  =>$request->productPrice,
+            'status'        =>$request->status,
+        ]);
+
+        notify()->success('Product Updated Successfully.', 'Product');
+        Cache::forget('products');
+        Cache::forget('homeProducts');
         return redirect()->back();
     }
     public function delete($id)
@@ -74,7 +111,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         // dd($product->id);
         $product -> delete();
-        notify()->success('One product deleted succesfully.', 'Product');
+        notify()->success('One product deleted Successfully.', 'Product');
         return redirect()->back();
     }
     public function productPdf()
@@ -90,9 +127,13 @@ class ProductController extends Controller
         // $pdf->loadHTML('backend.pages.product.pdf');
         // return $pdf->stream();
     }
-    public function export() 
+    public function export()
     {
         return Excel::download(new ProductsExport, 'products.xlsx');
+    }
+    public function excelUpload()
+    {
+        return view('backend.pages.product.uploadExcel');
     }
 
 

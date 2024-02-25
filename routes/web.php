@@ -67,10 +67,13 @@ Route::group(['prefix'=>'admin','middleware'=>'admin'], function(){
     Route::get('/product-list',[ProductController::class, 'list'])->name('product.list');
     Route::get('/product-create',[ProductController::class, 'create'])->name('product.create');
     Route::post('/product-store',[ProductController::class, 'store'])->name('product.store');
+    Route::get('/product-edit/{id}',[ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/product-update{id}',[ProductController::class, 'update'])->name('product.update');
     Route::get('/product-show/{id}',[ProductController::class, 'show'])->name('product.show');
     Route::get('/product/delete/{id}',[ProductController::class, 'delete'])->name('product.delete');
     Route::get('/product/pdf',[ProductController::class, 'productPdf'])->name('product.pdf');
     Route::get('/product/excel',[ProductController::class, 'export'])->name('product.excel');
+    Route::get('/product/excel/upload',[ProductController::class, 'excelUpload'])->name('product.excelUpload');
     Route::get('/getStockNotifications',[ProductController::class, 'getStockNotifications'])->name('getStockNotifications');
 
 
@@ -78,6 +81,7 @@ Route::group(['prefix'=>'admin','middleware'=>'admin'], function(){
     Route::get('/order/list', [OrderController::class, 'list'])->name('order.list');
     Route::get('/order/ajaxlist', [OrderController::class, 'ajaxList'])->name('order.ajaxList');
     Route::get('/order/show/{id}', [OrderController::class, 'show'])->name('order.show');
+    Route::put('/order/update/{id}', [OrderController::class, 'update'])->name('order.update');
     Route::get('/order/pdf/{id}', [OrderController::class, 'orderPdf'])->name('order.pdf');
 
 
@@ -128,7 +132,7 @@ Route::group(['middleware'=>'customer'], function(){
     Route::post('/customer/profileUpdate', [CustomerController::class, 'customerProfileUpdate'])->name('customer.profileUpdate');
     Route::get('/checkout', [OrderController::class, 'checkOut'])->name('check.out');
     Route::post('/place/order', [OrderController::class, 'placeOrder'])->name('place.order');
-    
+
 
 
 

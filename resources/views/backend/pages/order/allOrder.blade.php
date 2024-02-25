@@ -12,6 +12,8 @@
             <th scope="col">Phone</th>
             <th scope="col">Address</th>
             <th scope="col">Payment </th>
+            <th scope="col">Order Status </th>
+            <th scope="col">Payment Status </th>
             <th scope="col">Total</th>
             <th scope="col">Actions</th>
           </tr>
@@ -25,9 +27,11 @@
                 <td>{{$order->number}}</td>
                 <td>{{$order->address}}</td>
                 <td>{{$order->payment_method}}</td>
+                <td>{{$order->order_status}}</td>
+                <td>{{$order->payment_status}}</td>
                 <td>{{$order->total}}</td>
                 <td>
-                  <a href="{{Route('order.show',$order->id)}}" class="btn btn-primary">Show</a>  
+                  <a href="{{Route('order.show',$order->id)}}" class="btn btn-primary">Show</a>
                 </td>
               </tr>
           @endforeach

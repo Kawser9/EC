@@ -11,44 +11,49 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-                        <h4 class="page-title">Order Details | <a href="{{URL:: previous()}}">Back</a></h4>
+                        <h4 class="page-title">Order Details | <a href="{{Route('allOrder.list')}}">Back</a></h4>
                     </div>
                 </div>
             </div>
             <!-- end page title -->
 
-            <!-- end row -->  
-            <form action="" method="post">
+            <!-- end row -->
+            <form action="{{Route('order.update',$order->id)}}" method="post">
                 @csrf
-                
-                <label for="">Order Status : </label>
+                @method('put')
+                <label  for="">Order Status : </label>
                 <div class="btn-group">
-                    <select name="order_status" class="form-select" aria-label="Default select example">
+                    <select name="order_status" class="form-control" aria-label="Default select example">
                               <option value="">Select Status</option>
-                              <option  value="pending">Pending</option>
-                              <option value="confirmed">Confirmed</option>
-                              <option value="packed">Packed</option>
-                              <option value="shipped">Shipped</option>
-                              <option value="delivered">Delivered</option>
+                              <option {{ $order->order_status == 'pending' ? 'selected' : 'hidden' }} value="pending">Pending</option>
+                              {{-- <option @if ($order->order_status == 'confirmed') hidden @endif @if ($order->order_status == 'pending') selected @endif value="pending">Pending</option> --}}
+                              <option @if ($order->order_status == 'confirmed') selected @endif value="confirmed">Confirmed</option>
+                              <option @if ($order->order_status == 'packed') selected @endif value="packed">Packed</option>
+                              <option @if ($order->order_status == 'shipped') selected @endif value="shipped">Shipped</option>
+                              <option @if ($order->order_status == 'delivered') selected @endif value="delivered">Delivered</option>
                     </select>
                 </div>
                 <label for="">Payment Status : </label>
                 <div class="btn-group">
-                    <select name="payment_status" class="form-select" aria-label="Default select example">
+                    <select name="payment_status" class="form-control" aria-label="Default select example">
                               <option value="pending">Pending</option>
                               <option value="paid">Paid</option>
                               <option value="VALID">VALID</option>
                     </select>
                 </div>
                 <br>
-                    <button type="submit" class="button">Update</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
             </form>
-              
 
-            <br><br><br>
-            <a href="{{Route('order.pdf',$order->id)}}" class="btn btn-success">PDF Invoice</a>
+
             <br>
-            
+            @if ($order->order_status =='pending')
+                <span> This order is still pending you can't print the invoice.</span>
+            @else
+                <a href="{{Route('order.pdf',$order->id)}}" class="btn btn-success">PDF Invoice</a>
+            @endif
+            <br><br>
+
             <div class="row">
                 <div class="col-lg-12" id="printslip">
                     <div class="card">
@@ -80,15 +85,15 @@
                                     </tbody>
                                 </table>
                             </div>
-                            
+
                             <!-- end table-responsive -->
-                            
+
                         </div>
                     </div>
 
-            
 
-            
+
+
         </div> <!-- container -->
 
     </div> <!-- content -->

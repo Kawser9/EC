@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\backend\Employee;
+use App\Models\backend\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,10 +12,11 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
+        $stockProduct = Product::all();
         $employee=Employee::all();
         $ecount = Employee::where('status' , 'active')->get();
         $count_all_employee = $employee->count();
-        return view('backend.pages.dashboard',compact(['employee','ecount','count_all_employee']));
+        return view('backend.pages.dashboard',compact(['employee','ecount','count_all_employee','stockProduct']));
     }
 
     public function getTotalSalary()

@@ -1,12 +1,12 @@
 @extends('backend.master')
 @section('content')
 <div class="card shadow mb-4">
-    {{-- <div class="card-header py-3 d-flex justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+    <div class="card-header py-3 d-flex justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Product Create</h6>
         <div class="right">
-            <a class="btn btn-primary" href="{{Route('product.list')}}">Create</a>
+            <a class="btn btn-primary" href="{{Route('product.list')}}">Back</a>
         </div>
-    </div> --}}
+    </div>
     <div class="card-body">
         <div class="table-responsive">
             <div class="card-body">

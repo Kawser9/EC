@@ -4,7 +4,7 @@
     <div class="card-header py-3 d-flex justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Product list</h6>
         <div class="right">
-            <a href="" class="btn btn-success">Upload Excel</a>
+            <a href="{{Route('product.excelUpload')}}" class="btn btn-success">Upload Excel</a>
             <a class="btn btn-primary" href="{{Route('product.create')}}">Create</a>
         </div>
     </div>
@@ -23,6 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <h3>{{$dataSource}}</h3>
                     @foreach ($products as $item)
                         <tr>
                             {{-- <td>{{$item->id}}</td> --}}
@@ -40,7 +41,7 @@
                                 {{-- <img src="{{url('/uploads/products/'.$item->productImage)}}"style="width: 50px;" alt=""> --}}
                             </td>
                             <td >
-                                    {{-- <a class="btn btn-primary" href="{{Route('employee.edit',$item->id)}}"><i class="fa-solid fa-pen-to-square"></i></a> --}}
+                                    <a class="btn btn-primary" href="{{Route('product.edit',$item->id)}}"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a class="btn btn-success" href="{{Route('product.show',$item->id)}}"><i class="fa fa-eye"></i></a>
                                     <a class="btn btn-danger" href="{{Route('product.delete',$item->id)}}"><i class="fa fa-trash"></i></a>
                             </td>

@@ -33,6 +33,8 @@ class OrderController extends Controller
                     'email' => auth('customer')->user()->email,
                     'address' => $request->address,
                     'number' => $request->number,
+                    'order_status' => 'pending',
+                    'payment_status' => 'pending',
                     'payment_method' => $request->paymentMethod,
                     'total' => array_sum(array_column($myCart, 'sub_total')),
                 ]);
@@ -51,10 +53,10 @@ class OrderController extends Controller
                 DB::commit();
 
                 notify()->success('Order is Placed.', 'Order');
-                
+
                 session()->forget('cart');
                 return redirect()->back();
-        
+
         } catch (Throwable $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -78,7 +80,7 @@ class OrderController extends Controller
                 ->addColumn('action', function($row){
                     $btn = '<a class="btn btn-xs btn-primary" href="/order/show/$data->id"><i class="glyphicon glyphicon-eye-open"></i> View</a>';
                     $btn .= '<a href="javascript:void(1)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    
+
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -96,7 +98,17 @@ class OrderController extends Controller
         $orderDetails= OrderDetail::with('product')->where('order_id', $id)->get();
         return view('backend.pages.order.show',compact(['orderDetails','order']));
     }
+    public function update(Request $request,$id)
+    {
 
+        $order = Order::find($id);
+        $order ->update([
+            'order_status'=> $request->order_status,
+            'payment_status'=> $request->payment_status,
+        ]);
+        notify()->success('Order Updated Successfully.', 'Order');
+        return redirect()->back();
+    }
     public function orderPdf($id)
     {
         // $fileName = 'product.pdf';
@@ -112,5 +124,5 @@ class OrderController extends Controller
         // return $pdf->download($fileName);
         return $pdf->stream();
     }
-    
+
 }

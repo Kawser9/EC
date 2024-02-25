@@ -5,13 +5,26 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\backend\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        $products = Product::latest()->take(8)->get();
-        return view('frontend.pages.dashboard',compact('products'));
+        // Cache::forget('homeProducts');
+        if(Cache::has('homeProducts'))
+        {
+            $dataSource="Cache";
+            $products=Cache::get('homeProducts');
+
+        }else{
+            $dataSource="Database";
+            $products = Product::latest()->take(8)->get();
+
+            Cache::put('homeProducts',$products);
+        }
+        // $products = Product::latest()->take(8)->get();
+        return view('frontend.pages.dashboard',compact('products','dataSource'));
     }
     public function allProduct()
     {
@@ -96,5 +109,5 @@ class HomeController extends Controller
         notify()->success('Cart clear successfully.', 'Cart');
         return redirect()->back();
     }
-    
+
 }
