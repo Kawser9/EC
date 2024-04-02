@@ -82,6 +82,8 @@
                                             <td colspan="3" class="text-end"><strong>Total:</strong></td>
                                             <td><strong>{{$order->total}} ৳</strong></td>
                                         </tr>
+
+                                        
                                     </tbody>
                                 </table>
                             </div>

@@ -44,6 +44,7 @@
                                     <a class="btn btn-primary" href="{{Route('product.edit',$item->id)}}"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a class="btn btn-success" href="{{Route('product.show',$item->id)}}"><i class="fa fa-eye"></i></a>
                                     <a class="btn btn-danger" href="{{Route('product.delete',$item->id)}}"><i class="fa fa-trash"></i></a>
+                                    <button class='btn btn-danger float-right btn-sm' type="submit" data-toggle="confirmation" ><i class="fas fa-user-times mr-2"></i>Delete User</button>
                             </td>
                         </tr>
                     @endforeach
@@ -56,3 +57,12 @@
     </div>
 </div>
 @endsection
+<script src="/js/bootstrap-confirmation.js" defer></script>
+<script>
+    window.onload = function () {
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+        });
+    }
+</script>
+l
