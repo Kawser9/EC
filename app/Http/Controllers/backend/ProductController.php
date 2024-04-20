@@ -22,6 +22,7 @@ class ProductController extends Controller
     public function list()
     {
         // Cache::forget('products');
+        // Cache::forget('homeProducts');
         if(Cache::has('products'))
         {
             $dataSource="Cache";
@@ -29,7 +30,7 @@ class ProductController extends Controller
 
         }else{
             $dataSource="Database";
-            $products = Product::latest()->paginate(5);
+            $products = Product::latest()->paginate(15);
 
             Cache::put('products',$products);
         }

@@ -1,10 +1,23 @@
 <table>
     <thead>
         <tr>
-            <th>Product Code</th>
-            <th>Product Name</th>
-            <th>Product Price</th>
-            <th>Product Quantity</th>
+            <th>productCode</th>
+            <th>productName</th>
+            <th>quantity</th>
+            <th>description</th>
+            <th>status</th>
+            <th>discount</th>
+            <th>discount-type</th>
+            <th>productPrice</th>
+            <th>productImage</th>
+            <th>created_at</th>
+            <th>updated_at</th>
+            <th>category_id</th>
+            <th>frontImage</th>
+            <th>sideImage</th>
+            <th>total</th>
+            <th>opening_value</th>
+            <th>reOrder_quantity</th>
         </tr>
     </thead>
     <tbody>
@@ -12,8 +25,21 @@
             <tr>
                 <td>{{$item->productCode}}</td>
                 <td>{{$item->productName}}</td>
-                <td>{{$item->productPrice}} BDT</td>
                 <td>{{$item->quantity}}</td>
+                <td>{{$item->description}}</td>
+                <td>{{$item->status}}</td>
+                <td>{{$item->discount}}</td>
+                <td>{{$item->discount}}</td>
+                <td>{{$item->productPrice}}</td>
+                <td>{{$item->productImage}}</td>
+                <td>{{$item->created_at}}</td>
+                <td>{{$item->updated_at}}</td>
+                <td>{{$item->category_id}}</td>
+                <td>{{$item->frontImage}}</td>
+                <td>{{$item->sideImage}}</td>
+                <td>{{$item->total}}</td>
+                <td>{{$item->opening_value}}</td>
+                <td>{{$item->reOrder_quantity}}</td>
             </tr>
         @endforeach
     </tbody>
